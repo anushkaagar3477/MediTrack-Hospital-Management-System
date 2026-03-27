@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ClinicFlow Lite</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="wrap">
+      <nav class="top-nav">
+        <a href="#add-patient">Add Patient</a>
+        <a href="#add-doctor">Add Doctor</a>
+        <a href="#patients">Patients</a>
+        <a href="#doctors">Doctors</a>
+        <a href="#book-appointment">Book Appointment</a>
+        <a href="#doctor-today">Doctor Today</a>
+        <span class="nav-spacer"></span>
+        <button id="logoutBtn" type="button" class="logout-btn">Logout</button>
+      </nav>
+
+      <header class="hero">
+        <div>
+          <p class="eyebrow">Community Hospital Dashboard</p>
+          <h1>ClinicFlow Lite</h1>
+          <p>
+            Fast patient intake and appointment tracking for a small hospital
+            front desk.
+          </p>
+        </div>
+        <img
+          class="hero-image"
+          src="new.jpeg"
+          alt="Hospital hallway with medical staff"
+        />
+      </header>
+
+      <section class="image-strip card">
+        <img
+          src="https://images.unsplash.com/photo-1631815588090-d4bfec5b1ccb?auto=format&fit=crop&w=800&q=80"
+          alt="Doctor consulting a patient"
+        />
+        <img
+          src="https://images.unsplash.com/photo-1581056771107-24ca5f033842?auto=format&fit=crop&w=800&q=80"
+          alt="Nurse station in hospital"
+        />
+        <img
+          src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=800&q=80"
+          alt="Medical equipment in clinic room"
+        />
+      </section>
+
+      <section class="grid">
+        <section id="add-patient" class="card card-patient-form">
+          <h2>Add Patient</h2>
+          <form id="patientForm">
+            <input id="name" type="text" placeholder="Patient name" required />
+            <input id="contact" type="text" placeholder="Contact number" />
+            <button type="submit">Save Patient</button>
+          </form>
+        </section>
+
+        <section id="add-doctor" class="card card-doctor-form">
+          <h2>Add Doctor</h2>
+          <form id="doctorForm">
+            <input
+              id="doctorName"
+              type="text"
+              placeholder="Doctor name"
+              required
+            />
+            <input
+              id="speciality"
+              type="text"
+              placeholder="Speciality"
+              required
+            />
+            <button type="submit">Save Doctor</button>
+          </form>
+        </section>
+      </section>
+
+      <section class="grid">
+        <article id="patients" class="card card-patients-list">
+          <h2>Patients</h2>
+          <ul id="patientsList" class="list"></ul>
+        </article>
+
+        <article id="doctors" class="card card-doctors-list">
+          <h2>Doctors</h2>
+          <ul id="doctorsList" class="list"></ul>
+        </article>
+      </section>
+
+      <section class="grid single">
+        <article id="book-appointment" class="card card-appointments">
+          <h2>Book Appointment</h2>
+          <form id="apptForm">
+            <select id="patientSelect" required>
+              <option value="">Choose patient</option>
+            </select>
+            <select id="doctorSelect" required>
+              <option value="">Choose doctor</option>
+            </select>
+            <input id="date" type="date" required />
+            <input id="time" type="time" required />
+            <button type="submit">Create Appointment</button>
+          </form>
+          <ul id="appointmentsList" class="list"></ul>
+        </article>
+      </section>
+
+      <section class="grid single">
+        <article id="doctor-today" class="card card-doctor-today is-hidden">
+          <h2>Today's Appointments (Doctor View)</h2>
+          <p id="doctorTodayTitle" class="login-hint"></p>
+          <div id="doctorTodayList" class="doctor-today-list"></div>
+        </article>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>

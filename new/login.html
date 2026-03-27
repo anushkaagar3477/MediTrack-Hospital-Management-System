@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ClinicFlow Lite Login</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="login-wrap">
+      <section class="login-card">
+        <p class="eyebrow">Hospital Access</p>
+        <h1>Sign In</h1>
+        <p class="login-help">Enter your credentials to open the dashboard.</p>
+
+        <form id="loginForm" class="login-form">
+          <input id="username" type="text" placeholder="Username" required />
+          <input
+            id="password"
+            type="password"
+            placeholder="Password"
+            required
+          />
+          <button type="submit">Login</button>
+        </form>
+
+        <button id="showRegisterBtn" class="secondary-btn" type="button">
+          Not registered? Create account
+        </button>
+
+        <form id="registerForm" class="login-form is-hidden">
+          <input
+            id="registerUsername"
+            type="text"
+            placeholder="New username"
+            required
+          />
+          <select id="registerRole" required>
+            <option value="staff">Register as staff</option>
+            <option value="doctor">Register as doctor</option>
+          </select>
+          <input
+            id="registerDoctorName"
+            type="text"
+            placeholder="Doctor display name (required for doctor login)"
+            class="is-hidden"
+          />
+          <input
+            id="registerPassword"
+            type="password"
+            placeholder="New password"
+            required
+          />
+          <input
+            id="confirmPassword"
+            type="password"
+            placeholder="Confirm password"
+            required
+          />
+          <button type="submit">Register</button>
+        </form>
+
+        <p id="loginError" class="login-error" aria-live="polite"></p>
+        <p class="login-hint">Login works with registered credentials only.</p>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
