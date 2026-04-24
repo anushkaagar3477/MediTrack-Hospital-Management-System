@@ -1,0 +1,380 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body class="dashboard-body">
+    <div class="navbar">
+      <h2>MediTrack</h2>
+      <div class="top-actions">
+        <span id="liveTime" class="live-time">--:--:--</span>
+        <button onclick="logout()">Logout</button>
+      </div>
+    </div>
+
+    <div class="main">
+      <div class="sidebar">
+        <a href="#" class="nav-link active" data-target="dashboardView"
+          >Dashboard</a
+        >
+        <a href="#" class="nav-link" data-target="patientsView">Patients</a>
+        <a href="#" class="nav-link" data-target="appointmentsView"
+          >Appointments</a
+        >
+        <a href="#" class="nav-link" data-target="doctorsView">Doctors</a>
+      </div>
+
+      <div class="content">
+        <section id="dashboardView" class="view active-view">
+          <h1>Dashboard</h1>
+          <p class="subtext">Click any card to open and manage that section.</p>
+
+          <div class="cards">
+            <button
+              class="card card-btn"
+              data-target="patientsView"
+              type="button"
+            >
+              <h3>Patients</h3>
+              <p id="patientsCount">0</p>
+            </button>
+
+            <button
+              class="card card-btn"
+              data-target="doctorsView"
+              type="button"
+            >
+              <h3>Doctors</h3>
+              <p id="doctorsCount">0</p>
+            </button>
+
+            <button
+              class="card card-btn"
+              data-target="appointmentsView"
+              type="button"
+            >
+              <h3>Appointments</h3>
+              <p id="appointmentsCount">0</p>
+            </button>
+          </div>
+        </section>
+
+        <section id="patientsView" class="view">
+          <h1>Patients</h1>
+          <form id="patientForm" class="inline-form">
+            <input
+              id="patientName"
+              type="text"
+              placeholder="Patient name"
+              required
+            />
+            <input
+              id="patientAge"
+              type="number"
+              min="0"
+              placeholder="Age"
+              required
+            />
+            <button type="submit">Add Patient</button>
+          </form>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Age</th>
+                </tr>
+              </thead>
+              <tbody id="patientsTableBody"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="appointmentsView" class="view">
+          <h1>Appointments</h1>
+          <form id="appointmentForm" class="inline-form">
+            <input
+              id="appointmentPatient"
+              type="text"
+              placeholder="Patient"
+              required
+            />
+            <input
+              id="appointmentDoctor"
+              type="text"
+              placeholder="Doctor"
+              required
+            />
+            <input id="appointmentTime" type="time" required />
+            <button type="submit">Add Appointment</button>
+          </form>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Patient</th>
+                  <th>Doctor</th>
+                  <th>Time</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="appointmentsTableBody"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="doctorsView" class="view">
+          <h1>Doctors</h1>
+          <form id="doctorForm" class="inline-form">
+            <input
+              id="doctorName"
+              type="text"
+              placeholder="Doctor name"
+              required
+            />
+            <input
+              id="doctorSpecialty"
+              type="text"
+              placeholder="Specialty"
+              required
+            />
+            <button type="submit">Add Doctor</button>
+          </form>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Specialty</th>
+                </tr>
+              </thead>
+              <tbody id="doctorsTableBody"></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <script>
+      const navLinks = document.querySelectorAll(".nav-link");
+      const cardButtons = document.querySelectorAll(".card-btn");
+      const views = document.querySelectorAll(".view");
+
+      const patientsCount = document.getElementById("patientsCount");
+      const doctorsCount = document.getElementById("doctorsCount");
+      const appointmentsCount = document.getElementById("appointmentsCount");
+      const liveTime = document.getElementById("liveTime");
+
+      const patientForm = document.getElementById("patientForm");
+      const doctorForm = document.getElementById("doctorForm");
+      const appointmentForm = document.getElementById("appointmentForm");
+
+      const patientsTableBody = document.getElementById("patientsTableBody");
+      const doctorsTableBody = document.getElementById("doctorsTableBody");
+      const appointmentsTableBody = document.getElementById(
+        "appointmentsTableBody",
+      );
+
+      const patients = [
+        { name: "Anita Patel", age: 34 },
+        { name: "Rahul Sharma", age: 41 },
+      ];
+
+      const doctors = [
+        { name: "Dr. Mehta", specialty: "Cardiology" },
+        { name: "Dr. Shah", specialty: "Neurology" },
+      ];
+
+      const appointments = [
+        {
+          patient: "Anita Patel",
+          doctor: "Dr. Mehta",
+          time: "09:30",
+          status: "Scheduled",
+        },
+        {
+          patient: "Rahul Sharma",
+          doctor: "Dr. Shah",
+          time: "10:00",
+          status: "Completed",
+        },
+      ];
+
+      function showView(targetId) {
+        views.forEach((view) => {
+          view.classList.toggle("active-view", view.id === targetId);
+        });
+
+        navLinks.forEach((link) => {
+          link.classList.toggle("active", link.dataset.target === targetId);
+        });
+      }
+
+      function updateCounts() {
+        patientsCount.textContent = patients.length;
+        doctorsCount.textContent = doctors.length;
+        appointmentsCount.textContent = appointments.length;
+      }
+
+      function renderPatients() {
+        patientsTableBody.innerHTML = "";
+        patients.forEach((patient) => {
+          const row = document.createElement("tr");
+          row.innerHTML =
+            "<td>" + patient.name + "</td><td>" + patient.age + "</td>";
+          patientsTableBody.appendChild(row);
+        });
+      }
+
+      function renderDoctors() {
+        doctorsTableBody.innerHTML = "";
+        doctors.forEach((doctor) => {
+          const row = document.createElement("tr");
+          row.innerHTML =
+            "<td>" + doctor.name + "</td><td>" + doctor.specialty + "</td>";
+          doctorsTableBody.appendChild(row);
+        });
+      }
+
+      function renderAppointments() {
+        appointmentsTableBody.innerHTML = "";
+        appointments.forEach((appt, index) => {
+          const row = document.createElement("tr");
+          const statusClass =
+            appt.status === "Completed"
+              ? "status-completed"
+              : "status-scheduled";
+          const buttonLabel =
+            appt.status === "Completed" ? "Reopen" : "Mark Complete";
+
+          row.innerHTML =
+            "<td>" +
+            appt.patient +
+            "</td>" +
+            "<td>" +
+            appt.doctor +
+            "</td>" +
+            "<td>" +
+            appt.time +
+            "</td>" +
+            '<td><span class="status-pill ' +
+            statusClass +
+            '">' +
+            appt.status +
+            "</span></td>" +
+            '<td><button type="button" class="table-btn" data-index="' +
+            index +
+            '">' +
+            buttonLabel +
+            "</button></td>";
+
+          appointmentsTableBody.appendChild(row);
+        });
+      }
+//Entire UI update
+      function refreshAll() {
+        updateCounts();
+        renderPatients();
+        renderDoctors();
+        renderAppointments();
+      }
+//Live time update
+      function updateLiveTime() {
+        const now = new Date();
+        liveTime.textContent = now.toLocaleTimeString("en-IN", {
+          hour12: true,
+        });
+      }
+
+      navLinks.forEach((link) => {
+        link.addEventListener("click", (event) => {
+          event.preventDefault();
+          showView(link.dataset.target);
+        });
+      });
+
+      cardButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          showView(button.dataset.target);
+        });
+      });
+
+      patientForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const nameInput = document.getElementById("patientName");
+        const ageInput = document.getElementById("patientAge");
+
+        patients.push({
+          name: nameInput.value.trim(),
+          age: Number(ageInput.value),
+        });
+
+        patientForm.reset();
+        refreshAll();
+      });
+
+      doctorForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const nameInput = document.getElementById("doctorName");
+        const specialtyInput = document.getElementById("doctorSpecialty");
+
+        doctors.push({
+          name: nameInput.value.trim(),
+          specialty: specialtyInput.value.trim(),
+        });
+
+        doctorForm.reset();
+        refreshAll();
+      });
+
+      appointmentForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const patientInput = document.getElementById("appointmentPatient");
+        const doctorInput = document.getElementById("appointmentDoctor");
+        const timeInput = document.getElementById("appointmentTime");
+
+        appointments.push({
+          patient: patientInput.value.trim(),
+          doctor: doctorInput.value.trim(),
+          time: timeInput.value,
+          status: "Scheduled",
+        });
+
+        appointmentForm.reset();
+        refreshAll();
+      });
+
+      appointmentsTableBody.addEventListener("click", (event) => {
+        const target = event.target;
+        if (!target.classList.contains("table-btn")) {
+          return;
+        }
+
+        const index = Number(target.dataset.index);
+        if (!Number.isNaN(index) && appointments[index]) {
+          appointments[index].status =
+            appointments[index].status === "Completed"
+              ? "Scheduled"
+              : "Completed";
+          refreshAll();
+        }
+      });
+
+      function logout() {
+        window.location.href = "login.html";
+      }
+    
+      refreshAll();
+      updateLiveTime();
+      setInterval(updateLiveTime, 1000);
+    </script>
+  </body>
+</html>

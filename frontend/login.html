@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body class="auth-body">
+    <div class="auth-container">
+      <div class="auth-box">
+        <h2>MediTrack Login</h2>
+
+        <form id="loginForm">
+          <input id="emailInput" type="email" placeholder="Email" required />
+
+          <input
+            id="passwordInput"
+            type="password"
+            placeholder="Password"
+            required
+          />
+
+          <div class="strength-wrap" aria-hidden="true">
+            <div id="strengthFill" class="strength-fill"></div>
+          </div>
+
+          <button id="loginButton" type="submit">Login</button>
+          <div id="authNote" class="auth-note"></div>
+        </form>
+
+        <p>Don't have an account? <a href="register.html">Register</a></p>
+      </div>
+    </div>
+
+    <script>
+      const loginForm = document.getElementById("loginForm");
+      const emailInput = document.getElementById("emailInput");
+      const passwordInput = document.getElementById("passwordInput");
+      const strengthFill = document.getElementById("strengthFill");
+      const loginButton = document.getElementById("loginButton");
+      const authNote = document.getElementById("authNote");
+
+      function updateStrengthUI() {
+        const length = passwordInput.value.length;
+        let percent = 0;
+        let color = "#e2e8f0";
+
+        if (length > 0 && length < 6) {
+          percent = 33;
+          color = "#f59e0b";
+          authNote.textContent = "Weak password. Add more characters.";
+        } else if (length >= 6 && length < 10) {
+          percent = 66;
+          color = "#0ea5e9";
+          authNote.textContent = "Good password strength.";
+        } else if (length >= 10) {
+          percent = 100;
+          color = "#10b981";
+          authNote.textContent = "Strong password. Ready to login.";
+        } else {
+          authNote.textContent = "";
+        }
+
+        strengthFill.style.width = percent + "%";
+        strengthFill.style.background = color;
+      }
+
+      emailInput.addEventListener("input", function () {
+        if (
+          emailInput.value.includes("@") &&
+          passwordInput.value.length === 0
+        ) {
+          authNote.textContent = "Email looks good. Enter password.";
+        } else if (passwordInput.value.length === 0) {
+          authNote.textContent = "";
+        }
+      });
+
+      passwordInput.addEventListener("input", function () {
+        updateStrengthUI();
+      });
+
+      loginForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        loginButton.classList.add("loading");
+        loginButton.textContent = "Signing in...";
+        authNote.textContent = "Checking credentials...";
+
+        setTimeout(function () {
+          authNote.textContent = "Login successful. Redirecting...";
+          window.location.href = "dashboard.html";
+        }, 700);
+      });
+    </script>
+  </body>
+</html>
