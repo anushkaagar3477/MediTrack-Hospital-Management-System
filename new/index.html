@@ -55,7 +55,14 @@
           <h2>Add Patient</h2>
           <form id="patientForm">
             <input id="name" type="text" placeholder="Patient name" required />
-            <input id="contact" type="text" placeholder="Contact number" />
+            <input id="age" type="number" placeholder="Age" required />
+            <input
+              id="disease"
+              type="text"
+              placeholder="Disease/Diagnosis"
+              required
+            />
+            <input id="doctor" type="text" placeholder="Doctor Name" required />
             <button type="submit">Save Patient</button>
           </form>
         </section>
@@ -115,6 +122,33 @@
           <h2>Today's Appointments (Doctor View)</h2>
           <p id="doctorTodayTitle" class="login-hint"></p>
           <div id="doctorTodayList" class="doctor-today-list"></div>
+        </article>
+      </section>
+
+      <section class="grid single">
+        <article id="ai-assistant" class="card card-ai-assistant">
+          <div class="ai-header-row">
+            <h2>AI Assistant</h2>
+            <button id="clearAiChatBtn" type="button" class="danger-btn">
+              Clear Chat
+            </button>
+          </div>
+          <p class="login-hint">
+            Ask for quick hospital insights from your MongoDB data.
+          </p>
+
+          <div id="aiMessages" class="ai-messages"></div>
+          <div id="aiSuggestions" class="ai-suggestions"></div>
+
+          <form id="aiForm" class="ai-form">
+            <input
+              id="aiInput"
+              type="text"
+              placeholder="Ask: summary, today's appointments, doctor status..."
+              required
+            />
+            <button type="submit">Ask AI</button>
+          </form>
         </article>
       </section>
     </main>

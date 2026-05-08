@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <div class="login-bg-orb login-bg-orb-a" aria-hidden="true"></div>
+    <div class="login-bg-orb login-bg-orb-b" aria-hidden="true"></div>
+
     <main class="login-wrap">
       <section class="login-card">
         <p class="eyebrow">Hospital Access</p>
@@ -62,6 +65,39 @@
 
         <p id="loginError" class="login-error" aria-live="polite"></p>
         <p class="login-hint">Login works with registered credentials only.</p>
+
+        <section class="db-check-panel">
+          <h2>Admin Quick Check</h2>
+          <p class="login-hint">
+            Verify if a username or patient is already saved in MongoDB.
+          </p>
+
+          <form id="userCheckForm" class="login-form compact-form">
+            <input
+              id="checkUsername"
+              type="text"
+              placeholder="Search username in DB"
+              required
+            />
+            <button type="submit">Check User</button>
+          </form>
+
+          <form id="patientCheckForm" class="login-form compact-form">
+            <input
+              id="checkPatientName"
+              type="text"
+              placeholder="Search patient name in DB"
+              required
+            />
+            <button type="submit">Check Patient</button>
+          </form>
+
+          <p
+            id="dbCheckResult"
+            class="login-error db-check-result"
+            aria-live="polite"
+          ></p>
+        </section>
       </section>
     </main>
 
